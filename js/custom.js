@@ -1,26 +1,31 @@
-$(document).ready(function () {
-
-    $('#openModalBtn').on('click', function (e) {
-        e.preventDefault();
-        $('#pdfModal').fadeIn();
-    });
-
-    $('.close-btn').on('click', function () {
-        $('#pdfModal').fadeOut();
-    });
-
-    $(window).on('click', function (e) {
-        if ($(e.target).is('#pdfModal')) {
-            $('#pdfModal').fadeOut();
-        }
-    });
-
+document.addEventListener('DOMContentLoaded', function () {
+    const pdfModal = document.getElementById('pdfModal');
+    const openModalBtn = document.getElementById('openModalBtn');
+    const closeModalBtn = document.querySelector('.close-btn');
     const menuItems = document.querySelectorAll('.menu_nav .nav-item');
+    const contactLink = document.querySelector('.nav-item a[href="#footer"]');
+    const socialImages = document.querySelectorAll('.footer_social img');
+    const gmailLink = document.getElementById('gmail-link');
+
+    if (openModalBtn && pdfModal) {
+        openModalBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            pdfModal.style.display = 'block';
+        });
+
+        closeModalBtn?.addEventListener('click', function () {
+            pdfModal.style.display = 'none';
+        });
+
+        window.addEventListener('click', function (e) {
+            if (e.target === pdfModal) {
+                pdfModal.style.display = 'none';
+            }
+        });
+    }
 
     function removeActiveClasses() {
-        menuItems.forEach(item => {
-            item.classList.remove('active');
-        });
+        menuItems.forEach(item => item.classList.remove('active'));
     }
 
     menuItems.forEach(item => {
@@ -30,31 +35,19 @@ $(document).ready(function () {
         });
     });
 
-    const contactLink = document.querySelector('.nav-item a[href="#footer"]');
-    const socialImages = document.querySelectorAll('.footer_social img');
-
     function glowImages() {
-        socialImages.forEach(image => {
-            image.classList.add('glow');
-        });
-
+        socialImages.forEach(image => image.classList.add('glow'));
         setTimeout(() => {
-            socialImages.forEach(image => {
-                image.classList.remove('glow');
-            });
+            socialImages.forEach(image => image.classList.remove('glow'));
         }, 1000);
     }
 
-    contactLink.addEventListener('click', function () {
-        glowImages();
-    });
+    contactLink?.addEventListener('click', glowImages);
 
-    document.getElementById('gmail-link').addEventListener('click', function (event) {
+    gmailLink?.addEventListener('click', function (event) {
         event.preventDefault();
-
-        const userConfirmed = confirm("Do you want to send an email to er.rajpawar@gmail.com?");
-        if (userConfirmed) {
-            window.location.href = "mailto:er.rajpawar@gmail.com";
+        if (confirm('Do you want to send an email to er.rajpawar@gmail.com?')) {
+            window.location.href = 'mailto:er.rajpawar@gmail.com';
         }
     });
 });
